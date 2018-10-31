@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.saigonbpo.wsqc.Mapper.LookupChannelMapper">
+  <resultMap id="BaseResultMap" type="com.saigonbpo.wsqc.Model.LookupChannel">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="cc_code" jdbcType="VARCHAR" property="ccCode" />
+    <result column="channel" jdbcType="VARCHAR" property="channel" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="pos_code" jdbcType="VARCHAR" property="posCode" />
+    <result column="pos_name" jdbcType="VARCHAR" property="posName" />
+    <result column="cc_name" jdbcType="VARCHAR" property="ccName" />
+    <result column="cc_password" jdbcType="VARCHAR" property="ccPassword" />
+    <result column="cc_role" jdbcType="VARCHAR" property="ccRole" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="company" jdbcType="VARCHAR" property="company" />
+    <result column="cc_phonenumber" jdbcType="VARCHAR" property="ccPhonenumber" />
+    <result column="device_model" jdbcType="VARCHAR" property="deviceModel" />
+    <result column="security_key" jdbcType="VARCHAR" property="securityKey" />
+    <result column="is_android" jdbcType="SMALLINT" property="isAndroid" />
+    <result column="date_of_user_creation" jdbcType="TIMESTAMP" property="dateOfUserCreation" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="is_enable" jdbcType="BIT" property="isEnable" />
+    <result column="last_login" jdbcType="TIMESTAMP" property="lastLogin" />
+    <result column="last_pwd_change" jdbcType="TIMESTAMP" property="lastPwdChange" />
+    <result column="is_pwd_changed" jdbcType="BIT" property="isPwdChanged" />
+    <result column="last_update" jdbcType="TIMESTAMP" property="lastUpdate" />
+    <result column="notes" jdbcType="VARCHAR" property="notes" />
+    <result column="bcrypt" jdbcType="VARCHAR" property="bcrypt" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, cc_code, channel, province, pos_code, pos_name, cc_name, cc_password, cc_role, 
+    parent_id, email, company, cc_phonenumber, device_model, security_key, is_android, 
+    date_of_user_creation, creator, is_enable, last_login, last_pwd_change, is_pwd_changed, 
+    last_update, notes, bcrypt
+  </sql>
+  <select id="selectByExample" parameterType="com.saigonbpo.wsqc.Model.LookupChannelExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from db_16001_0001_bak_20160525.lookup_channel
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from db_16001_0001_bak_20160525.lookup_channel
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from db_16001_0001_bak_20160525.lookup_channel
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.saigonbpo.wsqc.Model.LookupChannelExample">
+    delete from db_16001_0001_bak_20160525.lookup_channel
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.saigonbpo.wsqc.Model.LookupChannel" useGeneratedKeys="true">
+    insert into db_16001_0001_bak_20160525.lookup_channel (cc_code, channel, province, 
+      pos_code, pos_name, cc_name, 
+      cc_password, cc_role, parent_id, 
+      email, company, cc_phonenumber, 
+      device_model, security_key, is_android, 
+      date_of_user_creation, creator, is_enable, 
+      last_login, last_pwd_change, is_pwd_changed, 
+      last_update, notes, bcrypt
+      )
+    values (#{ccCode,jdbcType=VARCHAR}, #{channel,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, 
+      #{posCode,jdbcType=VARCHAR}, #{posName,jdbcType=VARCHAR}, #{ccName,jdbcType=VARCHAR}, 
+      #{ccPassword,jdbcType=VARCHAR}, #{ccRole,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, 
+      #{email,jdbcType=VARCHAR}, #{company,jdbcType=VARCHAR}, #{ccPhonenumber,jdbcType=VARCHAR}, 
+      #{deviceModel,jdbcType=VARCHAR}, #{securityKey,jdbcType=VARCHAR}, #{isAndroid,jdbcType=SMALLINT}, 
+      #{dateOfUserCreation,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR}, #{isEnable,jdbcType=BIT}, 
+      #{lastLogin,jdbcType=TIMESTAMP}, #{lastPwdChange,jdbcType=TIMESTAMP}, #{isPwdChanged,jdbcType=BIT}, 
+      #{lastUpdate,jdbcType=TIMESTAMP}, #{notes,jdbcType=VARCHAR}, #{bcrypt,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.saigonbpo.wsqc.Model.LookupChannel" useGeneratedKeys="true">
+    insert into db_16001_0001_bak_20160525.lookup_channel
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ccCode != null">
+        cc_code,
+      </if>
+      <if test="channel != null">
+        channel,
+      </if>
+      <if test="province != null">
+        province,
+      </if>
+      <if test="posCode != null">
+        pos_code,
+      </if>
+      <if test="posName != null">
+        pos_name,
+      </if>
+      <if test="ccName != null">
+        cc_name,
+      </if>
+      <if test="ccPassword != null">
+        cc_password,
+      </if>
+      <if test="ccRole != null">
+        cc_role,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="company != null">
+        company,
+      </if>
+      <if test="ccPhonenumber != null">
+        cc_phonenumber,
+      </if>
+      <if test="deviceModel != null">
+        device_model,
+      </if>
+      <if test="securityKey != null">
+        security_key,
+      </if>
+      <if test="isAndroid != null">
+        is_android,
+      </if>
+      <if test="dateOfUserCreation != null">
+        date_of_user_creation,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="isEnable != null">
+        is_enable,
+      </if>
+      <if test="lastLogin != null">
+        last_login,
+      </if>
+      <if test="lastPwdChange != null">
+        last_pwd_change,
+      </if>
+      <if test="isPwdChanged != null">
+        is_pwd_changed,
+      </if>
+      <if test="lastUpdate != null">
+        last_update,
+      </if>
+      <if test="notes != null">
+        notes,
+      </if>
+      <if test="bcrypt != null">
+        bcrypt,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ccCode != null">
+        #{ccCode,jdbcType=VARCHAR},
+      </if>
+      <if test="channel != null">
+        #{channel,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="posCode != null">
+        #{posCode,jdbcType=VARCHAR},
+      </if>
+      <if test="posName != null">
+        #{posName,jdbcType=VARCHAR},
+      </if>
+      <if test="ccName != null">
+        #{ccName,jdbcType=VARCHAR},
+      </if>
+      <if test="ccPassword != null">
+        #{ccPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="ccRole != null">
+        #{ccRole,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null">
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="ccPhonenumber != null">
+        #{ccPhonenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceModel != null">
+        #{deviceModel,jdbcType=VARCHAR},
+      </if>
+      <if test="securityKey != null">
+        #{securityKey,jdbcType=VARCHAR},
+      </if>
+      <if test="isAndroid != null">
+        #{isAndroid,jdbcType=SMALLINT},
+      </if>
+      <if test="dateOfUserCreation != null">
+        #{dateOfUserCreation,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="isEnable != null">
+        #{isEnable,jdbcType=BIT},
+      </if>
+      <if test="lastLogin != null">
+        #{lastLogin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastPwdChange != null">
+        #{lastPwdChange,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isPwdChanged != null">
+        #{isPwdChanged,jdbcType=BIT},
+      </if>
+      <if test="lastUpdate != null">
+        #{lastUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="notes != null">
+        #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="bcrypt != null">
+        #{bcrypt,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.saigonbpo.wsqc.Model.LookupChannelExample" resultType="java.lang.Long">
+    select count(*) from db_16001_0001_bak_20160525.lookup_channel
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update db_16001_0001_bak_20160525.lookup_channel
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.ccCode != null">
+        cc_code = #{record.ccCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channel != null">
+        channel = #{record.channel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.province != null">
+        province = #{record.province,jdbcType=VARCHAR},
+      </if>
+      <if test="record.posCode != null">
+        pos_code = #{record.posCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.posName != null">
+        pos_name = #{record.posName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ccName != null">
+        cc_name = #{record.ccName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ccPassword != null">
+        cc_password = #{record.ccPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ccRole != null">
+        cc_role = #{record.ccRole,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentId != null">
+        parent_id = #{record.parentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.email != null">
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.company != null">
+        company = #{record.company,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ccPhonenumber != null">
+        cc_phonenumber = #{record.ccPhonenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deviceModel != null">
+        device_model = #{record.deviceModel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.securityKey != null">
+        security_key = #{record.securityKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isAndroid != null">
+        is_android = #{record.isAndroid,jdbcType=SMALLINT},
+      </if>
+      <if test="record.dateOfUserCreation != null">
+        date_of_user_creation = #{record.dateOfUserCreation,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creator != null">
+        creator = #{record.creator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isEnable != null">
+        is_enable = #{record.isEnable,jdbcType=BIT},
+      </if>
+      <if test="record.lastLogin != null">
+        last_login = #{record.lastLogin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastPwdChange != null">
+        last_pwd_change = #{record.lastPwdChange,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isPwdChanged != null">
+        is_pwd_changed = #{record.isPwdChanged,jdbcType=BIT},
+      </if>
+      <if test="record.lastUpdate != null">
+        last_update = #{record.lastUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.notes != null">
+        notes = #{record.notes,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bcrypt != null">
+        bcrypt = #{record.bcrypt,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update db_16001_0001_bak_20160525.lookup_channel
+    set id = #{record.id,jdbcType=INTEGER},
+      cc_code = #{record.ccCode,jdbcType=VARCHAR},
+      channel = #{record.channel,jdbcType=VARCHAR},
+      province = #{record.province,jdbcType=VARCHAR},
+      pos_code = #{record.posCode,jdbcType=VARCHAR},
+      pos_name = #{record.posName,jdbcType=VARCHAR},
+      cc_name = #{record.ccName,jdbcType=VARCHAR},
+      cc_password = #{record.ccPassword,jdbcType=VARCHAR},
+      cc_role = #{record.ccRole,jdbcType=VARCHAR},
+      parent_id = #{record.parentId,jdbcType=INTEGER},
+      email = #{record.email,jdbcType=VARCHAR},
+      company = #{record.company,jdbcType=VARCHAR},
+      cc_phonenumber = #{record.ccPhonenumber,jdbcType=VARCHAR},
+      device_model = #{record.deviceModel,jdbcType=VARCHAR},
+      security_key = #{record.securityKey,jdbcType=VARCHAR},
+      is_android = #{record.isAndroid,jdbcType=SMALLINT},
+      date_of_user_creation = #{record.dateOfUserCreation,jdbcType=TIMESTAMP},
+      creator = #{record.creator,jdbcType=VARCHAR},
+      is_enable = #{record.isEnable,jdbcType=BIT},
+      last_login = #{record.lastLogin,jdbcType=TIMESTAMP},
+      last_pwd_change = #{record.lastPwdChange,jdbcType=TIMESTAMP},
+      is_pwd_changed = #{record.isPwdChanged,jdbcType=BIT},
+      last_update = #{record.lastUpdate,jdbcType=TIMESTAMP},
+      notes = #{record.notes,jdbcType=VARCHAR},
+      bcrypt = #{record.bcrypt,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.saigonbpo.wsqc.Model.LookupChannel">
+    update db_16001_0001_bak_20160525.lookup_channel
+    <set>
+      <if test="ccCode != null">
+        cc_code = #{ccCode,jdbcType=VARCHAR},
+      </if>
+      <if test="channel != null">
+        channel = #{channel,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="posCode != null">
+        pos_code = #{posCode,jdbcType=VARCHAR},
+      </if>
+      <if test="posName != null">
+        pos_name = #{posName,jdbcType=VARCHAR},
+      </if>
+      <if test="ccName != null">
+        cc_name = #{ccName,jdbcType=VARCHAR},
+      </if>
+      <if test="ccPassword != null">
+        cc_password = #{ccPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="ccRole != null">
+        cc_role = #{ccRole,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null">
+        company = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="ccPhonenumber != null">
+        cc_phonenumber = #{ccPhonenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceModel != null">
+        device_model = #{deviceModel,jdbcType=VARCHAR},
+      </if>
+      <if test="securityKey != null">
+        security_key = #{securityKey,jdbcType=VARCHAR},
+      </if>
+      <if test="isAndroid != null">
+        is_android = #{isAndroid,jdbcType=SMALLINT},
+      </if>
+      <if test="dateOfUserCreation != null">
+        date_of_user_creation = #{dateOfUserCreation,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="isEnable != null">
+        is_enable = #{isEnable,jdbcType=BIT},
+      </if>
+      <if test="lastLogin != null">
+        last_login = #{lastLogin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastPwdChange != null">
+        last_pwd_change = #{lastPwdChange,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isPwdChanged != null">
+        is_pwd_changed = #{isPwdChanged,jdbcType=BIT},
+      </if>
+      <if test="lastUpdate != null">
+        last_update = #{lastUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="notes != null">
+        notes = #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="bcrypt != null">
+        bcrypt = #{bcrypt,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.saigonbpo.wsqc.Model.LookupChannel">
+    update db_16001_0001_bak_20160525.lookup_channel
+    set cc_code = #{ccCode,jdbcType=VARCHAR},
+      channel = #{channel,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      pos_code = #{posCode,jdbcType=VARCHAR},
+      pos_name = #{posName,jdbcType=VARCHAR},
+      cc_name = #{ccName,jdbcType=VARCHAR},
+      cc_password = #{ccPassword,jdbcType=VARCHAR},
+      cc_role = #{ccRole,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      email = #{email,jdbcType=VARCHAR},
+      company = #{company,jdbcType=VARCHAR},
+      cc_phonenumber = #{ccPhonenumber,jdbcType=VARCHAR},
+      device_model = #{deviceModel,jdbcType=VARCHAR},
+      security_key = #{securityKey,jdbcType=VARCHAR},
+      is_android = #{isAndroid,jdbcType=SMALLINT},
+      date_of_user_creation = #{dateOfUserCreation,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR},
+      is_enable = #{isEnable,jdbcType=BIT},
+      last_login = #{lastLogin,jdbcType=TIMESTAMP},
+      last_pwd_change = #{lastPwdChange,jdbcType=TIMESTAMP},
+      is_pwd_changed = #{isPwdChanged,jdbcType=BIT},
+      last_update = #{lastUpdate,jdbcType=TIMESTAMP},
+      notes = #{notes,jdbcType=VARCHAR},
+      bcrypt = #{bcrypt,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+  <select id="findByUserName" parameterType="string" resultType="map">
+  	 select 
+  	 <include refid="Base_Column_List" />
+ 	 from db_16001_0001_bak_20160525.lookup_channel
+
+ 	 where cc_code = #{ccCode,jdbcType=VARCHAR}
+  </select>
+  
+  
+  
+</mapper>

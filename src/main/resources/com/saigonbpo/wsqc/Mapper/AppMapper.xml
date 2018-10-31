@@ -1,0 +1,263 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+  'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+
+<mapper namespace='com.saigonbpo.wsqc.Mapper.AppMapper'>
+
+	<select id="selectAll" resultType="map">
+		SELECT id,crmid,appid,status,qde_reason,type_api 
+		FROM
+		${jdbc.schema}.smartnet_notification 
+	</select>
+	
+
+	
+	<select id="checkPresentUser" resultType="boolean">
+		SELECT EXISTS(
+				
+				SELECT 1 
+				FROM ${jdbc.schema}.management
+				WHERE id=#{management_id}::bigint
+				and (present_user != null or present_user != '')
+		)
+	</select>
+	
+	<update id="updateDataPre" parameterType="map">
+	
+		update ${jdbc.schema}.data
+		set
+		tenkhachhang = #{tenkhachhang},
+	    i_ngay_thang_nam_sinh = #{i_ngay_thang_nam_sinh},
+	    so_cmnd = #{so_cmnd},
+	    ngaycap_cmnd = #{ngaycap_cmnd},
+	    noicap_cmnd = #{noicap_cmnd},
+
+	    branch_code = #{branch_code},
+	    kenh_giai_ngan = #{kenh_giai_ngan},
+	    sotienvay = #{sotienvay},
+	    thoihanvay = #{thoihanvay},
+	    name_dsa = #{name_dsa},
+	    code_dsa = #{code_dsa},
+	    name_tsa = #{name_tsa},
+	    cc_code = #{cc_code},
+	    cc_name = #{cc_name},
+	    sodienthoai_tsa = #{sodienthoai_tsa},
+	    date_of_closure = #{date_of_closure},
+	    baohiem_vay = #{baohiem_vay},
+	    insurance_plus = #{insurance_plus},
+	    insurance_name = #{insurance_name},
+	
+	    dia_chi_thuong_tru = #{dia_chi_thuong_tru},
+	    dia_chi_tam_tru = #{dia_chi_tam_tru},
+	    sdt_thamchieu1 = #{sdt_thamchieu1},
+	    sdt_thamchieu2 = #{sdt_thamchieu2},
+	    thongtin_vochong = #{thongtin_vochong},
+	    thunhap_kh_bsung = #{thunhap_kh_bsung},
+	    chiphi_kh_bsung = #{chiphi_kh_bsung},
+	    sdt_kh_bsung = #{sdt_kh_bsung},
+	    monthly_income_family = #{monthly_income_family},
+	    monthly_costs_family = #{monthly_costs_family},
+	    no_modified_fields = #{no_modified_fields},
+	    modified_fields = #{modified_fields},
+	    description = #{description},
+		birthday = #{birthday}
+		WHERE management_id = #{management_id}::bigint
+	
+	</update>
+	
+	<insert id="insertPreapprove_data_change_log" parameterType="map"
+		useGeneratedKeys="true" keyProperty="id">
+
+		INSERT INTO ${jdbc.schema}.preapprove_data_change_log
+		(
+			managementid, ten_khach_hang, cmnd, change_detail, change_by
+		)
+		VALUES(
+			#{management_id}::bigint,#{ten_khach_hang},#{cmnd},#{data_change_str},#{current_user}
+		)
+	</insert>
+	
+		
+	<update id="updateManagement03" parameterType="map">
+	
+		update ${jdbc.schema}.management
+			set 
+			update_infor_times = ( update_infor_times + 1 ),
+			bad_status = 0,
+			reason_bad = '',
+			pre_last_update_time=now(),
+			capture_status = 0
+
+		WHERE id = #{management_id}::bigint and capture_status = 0 and coalesce(present_user,'') = ''
+	</update>
+	
+	<update id="updateManagement04" parameterType="map">
+	
+		update ${jdbc.schema}.management
+			set
+			update_infor_times = ( update_infor_times + 1 ),
+			bad_status = 0,
+			reason_bad = '',
+			step1_status = '000',
+			capture_status = 0,
+			auto_fill_status = 0
+
+		WHERE id = #{management_id}::bigint and capture_status = 0 and coalesce(present_user,'') = ''
+	</update>
+	
+	<insert id="insertQDE" parameterType="map"
+		useGeneratedKeys="true" keyProperty="id">
+	     insert into ${jdbc.schema}.upload_qde(cc_code, file_name, id_f1, cus_name, cus_id_number, reason, error_code, is_pre_approved, qde_type, qde_type_code)
+	     VALUES 
+         (
+			#{cc_code},#{file_name},#{qdeIdf1}::bigint,#{qdetenkhachhang},#{qde_so_cmnd},#{qde_content},#{ErrorCode},1,1,#{QDETypeCode}
+		 )               
+	</insert>
+	
+	<select id="checkPresentUserCRC" resultType="boolean">
+		SELECT EXISTS(
+				
+				SELECT 1 
+				FROM ${jdbc.schema_01}.management
+				WHERE id=#{management_id}::bigint
+				and (present_user != null or present_user != '')
+		)
+	</select>
+	
+	<update id="updateDataCRC" parameterType="map">
+	
+		update ${jdbc.schema_01}.data
+		set
+		
+		
+		 so_cmnd = #{so_cmnd},
+	     ngaycap_cmnd = #{ngaycap_cmnd},
+	     noicap_cmnd = #{noicap_cmnd},
+	
+	     kenh_giai_ngan = #{kenh_giai_ngan},
+	     sotienvay = #{sotienvay},
+	     thoihanvay = #{thoihanvay},
+	     name_dsa = #{name_dsa},
+	     code_dsa = #{code_dsa},
+	     name_tsa = #{name_tsa},
+	
+	     sodienthoai_tsa = #{sodienthoai_tsa},
+	     date_of_closure = #{date_of_closure},
+	
+	     dia_chi_thuong_tru = #{dia_chi_thuong_tru},
+	     dia_chi_tam_tru = #{dia_chi_tam_tru},
+	     sdt_thamchieu1 = #{sdt_thamchieu1},
+	     sdt_thamchieu2 = #{sdt_thamchieu2},
+	     thongtin_vochong = #{thongtin_vochong},
+	     thunhap_kh_bsung = #{thunhap_kh_bsung},
+	     chiphi_kh_bsung = #{chiphi_kh_bsung},
+	     sdt_kh_bsung = #{sdt_kh_bsung},
+	     monthly_income_family = #{monthly_income_family},
+	     monthly_costs_family = #{monthly_costs_family},
+	     no_modified_fields = #{no_modified_fields},
+	     modified_fields = #{modified_fields},
+	     description = #{description},
+	     birthday = #{birthday},
+	    
+	     offered_credit_limit = #{offered_credit_limit},
+	     embossing_name = #{embossing_name},
+	     mailing_address = #{mailing_address},
+	     answer_for_security_question = #{answer_for_security_question},
+		email_id = #{email_id},
+		delivery_option = #{delivery_option}
+		
+		WHERE management_id = #{management_id}::bigint
+	
+	</update>
+	
+	<insert id="insertPreapprove_data_change_log_CRC" parameterType="map"
+		useGeneratedKeys="true" keyProperty="id">
+
+		INSERT INTO ${jdbc.schema_01}.preapprove_data_change_log
+		(
+			managementid, ten_khach_hang, cmnd, change_detail, change_by
+		)
+		VALUES(
+			#{management_id}::bigint,#{ten_khach_hang},#{cmnd},#{data_change_str},#{current_user}
+		)
+	</insert>
+	
+		
+	<update id="updateManagement03CRC" parameterType="map">
+	
+		update ${jdbc.schema_01}.management
+			set 
+			update_infor_times = ( update_infor_times + 1 ),
+			bad_status = 0,
+			reason_bad = '',
+			pre_last_update_time=now(),
+			capture_status = 0
+
+		WHERE id = #{management_id}::bigint and capture_status = 0 and coalesce(present_user,'') = ''
+	</update>
+	
+	<update id="updateManagement04CRC" parameterType="map">
+	
+		update ${jdbc.schema_01}.management
+			set
+			update_infor_times = ( update_infor_times + 1 ),
+			bad_status = 0,
+			reason_bad = '',
+			step1_status = '000',
+			capture_status = 0,
+			auto_fill_status = 0
+
+		WHERE id = #{management_id}::bigint and capture_status = 0 and coalesce(present_user,'') = ''
+	</update>
+	
+	<insert id="insertQDECRC" parameterType="map"
+		useGeneratedKeys="true" keyProperty="id">
+	     insert into ${jdbc.schema_01}.upload_qde(cc_code, file_name, id_f1, cus_name, cus_id_number, reason, error_code, is_pre_approved, qde_type, qde_type_code)
+	     VALUES 
+         (
+			#{cc_code},#{file_name},#{qdeIdf1}::bigint,#{qdetenkhachhang},#{qde_so_cmnd},#{qde_content},#{ErrorCode},1,1,#{QDETypeCode}
+		 )               
+	</insert>
+	
+		
+	<select id="masterdata" resultType="map" parameterType="map">
+			SELECT id,category,value_en,value_vn,sort
+			FROM ${jdbc.schema}.masterdata
+			WHERE is_active = 1 and category = #{category}
+			order by sort
+	</select>
+	
+	
+	<select id="AllocateView" resultType="map">
+		SELECT * from ${jdbc.schema}.request_allocate where not status 
+	</select>
+	
+	
+	<update id="UpdateAllocate" parameterType="map">
+		<foreach collection="allocate_list" item="model" separator=";">
+			
+			update ${jdbc.schema}.request_allocate 
+			set 
+				date_process = now(),
+				person_process = #{model.user_login},
+				status = true
+		    where id =#{model.id}::int
+			
+		</foreach>
+	</update>
+	
+	<insert id="insertAllocate" parameterType="map" >
+	     insert into ${jdbc.schema}.request_allocate
+	     (code_request, app_id, cc_code, full_name, date_request)
+	     VALUES 
+         (
+			#{code_request},#{app_id}::int,#{cc_code},#{full_name},now()
+		 )               
+	</insert>
+	
+	
+	
+
+
+</mapper>
+
